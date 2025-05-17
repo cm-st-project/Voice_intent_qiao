@@ -91,6 +91,46 @@ class _SpeechInputState extends State<SpeechInput> {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Row(
+      children: [
+        Expanded(
+          child: TextField(
+            controller: widget.textController,
+            maxLines: 6,
+            decoration: InputDecoration(
+              hintText:
+                  _speechEnabled
+                      ? "Type or tap the microphone button to speak..."
+                      : 'Speech recognition is not available',
+              border: const OutlineInputBorder(),
+            ),
+          ),
+        ),
+        const SizedBox(width: 8),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            IconButton(
+              onPressed:
+                  _speechEnabled
+                      ? (_isListening ? _stopListening : _startListening)
+                      : null,
+              icon: Icon(_isListening ? Icons.stop : Icons.mic),
+              color:
+                  _isListening
+                      ? Colors.red
+                      : _speechEnabled
+                      ? Theme.of(context).colorScheme.primary
+                      : Theme.of(context).disabledColor,
+            ),
+            if (_isListening)
+              Text(
+                'Listening...',
+                style: TextStyle(color: Colors.red, fontSize: 12),
+              ),
+          ],
+        ),
+      ],
+    );
   }
 }
