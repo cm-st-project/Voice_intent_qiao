@@ -6,7 +6,7 @@ import '../models/emotion_result.dart';
 import 'dart:async';
 
 class EmotionDetector extends StatefulWidget {
-  final EmotionDetector emotionService;
+  final EmotionService emotionService;
 
   const EmotionDetector({required this.emotionService});
 
@@ -28,14 +28,14 @@ class _EmotionDetectorState extends State<EmotionDetector> {
   @override
   void initState() {
     super.initState();
-    _initializeRecorder(); //TODO
+    _initilizeRecorder();
   }
 
-  Future<void> _initializedRecorder() async {
+  Future<void> _initilizeRecorder() async {
     final hasPermission = await _audioRecorder.hasPermission();
     if (!hasPermission) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Microphone permission not granted")),
+        const SnackBar(content: Text('Microphone permission not granted')),
       );
     }
   }
@@ -59,7 +59,7 @@ class _EmotionDetectorState extends State<EmotionDetector> {
     try {
       if (await _audioRecorder.hasPermission()) {
         final tempDir = Directory.systemTemp;
-        _recordingPath = '${tempDir.path}/teno_recording.wav';
+        _recordingPath = '${tempDir.path}/temp_recording.wav';
       }
 
       await _audioRecorder.start(
@@ -83,7 +83,7 @@ class _EmotionDetectorState extends State<EmotionDetector> {
     } catch (e) {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text("Error Starting recording: $e")));
+      ).showSnackBar(SnackBar(content: Text('Error Starting recording: $e')));
     }
   }
 
@@ -96,13 +96,13 @@ class _EmotionDetectorState extends State<EmotionDetector> {
     } catch (e) {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text("Error Pausing recording: $e")));
+      ).showSnackBar(SnackBar(content: Text('Error pausing recording: $e')));
     }
   }
 
   Future<void> _resumeRecording() async {
     try {
-      await _audioRecorder.pause();
+      await _audioRecorder.resume();
       setState(() {
         _isPaused = false;
       });
@@ -110,7 +110,7 @@ class _EmotionDetectorState extends State<EmotionDetector> {
     } catch (e) {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text("Error Resuming recording: $e")));
+      ).showSnackBar(SnackBar(content: Text('Error resuming recording: $e')));
     }
   }
 
@@ -137,9 +137,12 @@ class _EmotionDetectorState extends State<EmotionDetector> {
         }
       }
     } catch (e) {
+      setState(() {
+        _isAnalyzing = false;
+      });
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text("Error stopping recording: $e")));
+      ).showSnackBar(SnackBar(content: Text('Error stopping recording: $e')));
     }
   }
 
@@ -171,7 +174,7 @@ class _EmotionDetectorState extends State<EmotionDetector> {
   }
 
   String _formatDuration(Duration duration) {
-    String twoDigits(int n) => n.toString().padLeft(2, "0");
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
     String minutes = twoDigits(duration.inMinutes.remainder(60));
     String seconds = twoDigits(duration.inSeconds.remainder(60));
     return "$minutes:$seconds";
@@ -219,7 +222,204 @@ class _EmotionDetectorState extends State<EmotionDetector> {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const SizedBox(height: 20),
+        if (_isRecording) ...[
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            decoration: BoxDecoration(
+              color: Colors.red.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 12,
+                  height: 12,
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  'Recording ${_formatDuration(_recordingDuration)}',
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 20),
+          Container(
+            padding: const EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.primary.withOpacity(0.05),
+              shape: BoxShape.circle,
+            ),
+
+            child: Container(
+              padding: const EdgeInsets.all(4),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                shape: BoxShape.circle,
+              ),
+              child: IconButton(
+                onPressed: _isRecording ? _stopRecording : _startRecording,
+                icon: Icon(_isRecording ? Icons.stop : Icons.mic),
+                color:
+                    _isRecording
+                        ? Colors.red
+                        : Theme.of(context).colorScheme.primary,
+                iconSize: 32,
+              ),
+            ),
+          ),
+          if (_isRecording)
+            IconButton(
+              onPressed: _isPaused ? _resumeRecording : _pauseRecording,
+              icon: Icon(_isPaused ? Icons.play_arrow : Icons.pause),
+              tooltip: _isPaused ? "Resume Recording" : "Pause Recording",
+            ),
+          const SizedBox(height: 32),
+          if (_isAnalyzing) ...[
+            Column(
+              children: [
+                SizedBox(
+                  width: 60,
+                  height: 60,
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      Theme.of(context).colorScheme.primary,
+                    ),
+                    strokeWidth: 4,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  "Analyzing emotions...",
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                ),
+              ],
+            ),
+          ] else if (_lastResult != null) ...[
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 24),
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surface,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 10,
+                    offset: const Offset(0, 5),
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.psychology,
+                        color: Theme.of(context).colorScheme.primary,
+                        size: 24,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        "Detected Emotions",
+                        style: Theme.of(
+                          context,
+                        ).textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 24),
+                  ..._lastResult!.topEmotions.map((emotion) {
+                    final emotionColors = _getEmotionColor(context);
+                    final color =
+                        emotionColors[emotion.name] ??
+                        Theme.of(context).colorScheme.primary;
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  Container(
+                                    width: 12,
+                                    height: 12,
+                                    margin: const EdgeInsets.only(right: 8),
+                                    decoration: BoxDecoration(
+                                      color: color,
+                                      shape: BoxShape.circle,
+                                    ),
+                                  ),
+                                  Text(
+                                    emotion.name,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium
+                                        ?.copyWith(fontWeight: FontWeight.w500),
+                                  ),
+                                ],
+                              ),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 12,
+                                  vertical: 4,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: color,
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Text(
+                                  '${(emotion.score * 100).toStringAsFixed(1)}',
+                                  style: Theme.of(
+                                    context,
+                                  ).textTheme.titleMedium?.copyWith(
+                                    color: color,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 8),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(4),
+                            child: LinearProgressIndicator(
+                              value: emotion.score,
+                              backgroundColor: color.withOpacity(0.1),
+                              valueColor: AlwaysStoppedAnimation<Color>(color),
+                              minHeight: 8,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }),
+                ],
+              ),
+            ),
+          ],
+        ],
+      ],
+    );
   }
 }
 
@@ -262,17 +462,18 @@ class AmplitudePainter extends CustomPainter {
         barWidth - (spacing * 2),
         adjustedHeight,
       );
+
       canvas.drawRRect(
         RRect.fromRectAndRadius(rect, const Radius.circular(4)),
         paint,
       );
     }
+  }
 
-    @override
-    bool shouldRepaint(AmplitudePainter oldDelegate) {
-      return oldDelegate.amplitude != amplitude ||
-          oldDelegate.isRecording != isRecording ||
-          oldDelegate.color != color;
-    }
+  @override
+  bool shouldRepaint(AmplitudePainter oldDelegate) {
+    return oldDelegate.amplitude != amplitude ||
+        oldDelegate.isRecording != isRecording ||
+        oldDelegate.color != color;
   }
 }
