@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:project_mickey/models/emotion_result.dart';
 import '../models/pragmatic_result.dart';
+import '../models/literal_result.dart';
 
 class EmotionService {
   final String baseUrl;
@@ -59,6 +60,26 @@ class EmotionService {
       }
     } catch (e) {
       throw Exception('Error analyzing emotion: $e');
+    }
+  }
+
+  Future<LiteralResult> analyzeLiteralFigurative(String text) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$baseUrl/literal'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'text': text}),
+      );
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = jsonDecode(response.body);
+        return LiteralResult.fromJson(data);
+      } else {
+        throw Exception(
+          'Failed to analyze literal/figurative language: ${response.statusCode}',
+        );
+      }
+    } catch (e) {
+      throw Exception('Error analyzing literal/figurative language: $e');
     }
   }
 }
