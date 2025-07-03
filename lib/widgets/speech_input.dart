@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
+import 'package:permission_handler/permission_handler.dart';
 
 class SpeechInput extends StatefulWidget {
   final TextEditingController textController;
@@ -24,10 +25,16 @@ class _SpeechInputState extends State<SpeechInput> {
   }
 
   Future<void> _initSpeech() async {
-    _speechEnabled = await _speech.initialize(
-      onError: (error) => _handleError(error.errorMsg),
-      onStatus: (status) => _handleStatus(status),
-    );
+    final micStatus = await Permission.microphone.request();
+    if (micStatus.isGranted) {
+      _speechEnabled = await _speech.initialize(
+        onError: (error) => _handleError(error.errorMsg),
+        onStatus: (status) => _handleStatus(status),
+      );
+    } else {
+      _handleError("Microphone permission not granted");
+      _speechEnabled = false;
+    }
     setState(() {});
   }
 

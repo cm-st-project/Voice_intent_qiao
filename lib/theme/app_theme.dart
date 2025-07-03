@@ -73,11 +73,9 @@ class AppTheme {
         letterSpacing: 0.15,
       ),
     ),
-    cardTheme: CardTheme(
+    cardTheme: CardThemeData(
       elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(24),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
       color: surfaceColor,
       shadowColor: Colors.black.withOpacity(0.08),
     ),
@@ -99,9 +97,7 @@ class AppTheme {
         foregroundColor: Colors.white,
         elevation: 0,
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         textStyle: GoogleFonts.poppins(
           fontSize: 16,
           fontWeight: FontWeight.w600,
@@ -145,9 +141,7 @@ class AppTheme {
         letterSpacing: 0.15,
       ),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
     ),
   );
-} 
+}

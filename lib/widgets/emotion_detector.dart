@@ -8,7 +8,8 @@ import 'dart:async';
 class EmotionDetector extends StatefulWidget {
   final EmotionService emotionService;
 
-  const EmotionDetector({required this.emotionService});
+  const EmotionDetector({Key? key, required this.emotionService})
+    : super(key: key);
 
   @override
   State<EmotionDetector> createState() => _EmotionDetectorState();
@@ -28,10 +29,10 @@ class _EmotionDetectorState extends State<EmotionDetector> {
   @override
   void initState() {
     super.initState();
-    _initilizeRecorder();
+    _initializeRecorder();
   }
 
-  Future<void> _initilizeRecorder() async {
+  Future<void> _initializeRecorder() async {
     final hasPermission = await _audioRecorder.hasPermission();
     if (!hasPermission) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -60,30 +61,30 @@ class _EmotionDetectorState extends State<EmotionDetector> {
       if (await _audioRecorder.hasPermission()) {
         final tempDir = Directory.systemTemp;
         _recordingPath = '${tempDir.path}/temp_recording.wav';
+
+        await _audioRecorder.start(
+          RecordConfig(
+            encoder: AudioEncoder.wav,
+            bitRate: 128000,
+            sampleRate: 44100,
+            numChannels: 1,
+          ),
+          path: _recordingPath!,
+        );
+
+        setState(() {
+          _isRecording = true;
+          _isPaused = false;
+          _lastResult = null;
+        });
+
+        _startDurationTimer();
+        _startAmplitudeListener();
       }
-
-      await _audioRecorder.start(
-        RecordConfig(
-          encoder: AudioEncoder.wav,
-          bitRate: 128000,
-          sampleRate: 44100,
-          numChannels: 1,
-        ),
-        path: _recordingPath!,
-      );
-
-      setState(() {
-        _isRecording = true;
-        _isPaused = false;
-        _lastResult = null;
-      });
-
-      _startDurationTimer();
-      _startAmplitudeListener();
     } catch (e) {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text('Error Starting recording: $e')));
+      ).showSnackBar(SnackBar(content: Text('Error starting recording: $e')));
     }
   }
 
@@ -120,7 +121,7 @@ class _EmotionDetectorState extends State<EmotionDetector> {
       _stopDurationTimer();
       setState(() {
         _isRecording = false;
-        _isPaused = true;
+        _isPaused = false;
         _amplitude = 0.0;
         _isAnalyzing = true;
       });
@@ -134,6 +135,7 @@ class _EmotionDetectorState extends State<EmotionDetector> {
             _lastResult = result;
             _isAnalyzing = false;
           });
+          await file.delete();
         }
       }
     } catch (e) {
@@ -148,9 +150,7 @@ class _EmotionDetectorState extends State<EmotionDetector> {
 
   void _startAmplitudeListener() {
     Future.doWhile(() async {
-      if (!_isRecording || _isPaused) {
-        return false;
-      }
+      if (!_isRecording || _isPaused) return false;
 
       try {
         final amplitude = await _audioRecorder.getAmplitude();
@@ -158,7 +158,7 @@ class _EmotionDetectorState extends State<EmotionDetector> {
           _amplitude = amplitude.current;
         });
       } catch (e) {
-        debugPrint("Error getting amplitude: $e");
+        debugPrint('Error getting amplitude: $e');
       }
 
       await Future.delayed(const Duration(milliseconds: 100));
@@ -222,47 +222,48 @@ class _EmotionDetectorState extends State<EmotionDetector> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const SizedBox(height: 20),
-        if (_isRecording) ...[
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            decoration: BoxDecoration(
-              color: Colors.red.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  width: 12,
-                  height: 12,
-                  decoration: BoxDecoration(
-                    color: Colors.red,
-                    shape: BoxShape.circle,
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  'Recording ${_formatDuration(_recordingDuration)}',
-                  style: TextStyle(
-                    color: Colors.red,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-          ),
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
           const SizedBox(height: 20),
+          if (_isRecording) ...[
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              decoration: BoxDecoration(
+                color: Colors.red.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    width: 12,
+                    height: 12,
+                    decoration: BoxDecoration(
+                      color: Colors.red,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    'Recording ${_formatDuration(_recordingDuration)}',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+          ],
           Container(
             padding: const EdgeInsets.all(24),
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.primary.withOpacity(0.05),
               shape: BoxShape.circle,
             ),
-
             child: Container(
               padding: const EdgeInsets.all(4),
               decoration: BoxDecoration(
@@ -284,7 +285,7 @@ class _EmotionDetectorState extends State<EmotionDetector> {
             IconButton(
               onPressed: _isPaused ? _resumeRecording : _pauseRecording,
               icon: Icon(_isPaused ? Icons.play_arrow : Icons.pause),
-              tooltip: _isPaused ? "Resume Recording" : "Pause Recording",
+              tooltip: _isPaused ? 'Resume Recording' : 'Pause Recording',
             ),
           const SizedBox(height: 32),
           if (_isAnalyzing) ...[
@@ -302,7 +303,7 @@ class _EmotionDetectorState extends State<EmotionDetector> {
                 ),
                 const SizedBox(height: 16),
                 Text(
-                  "Analyzing emotions...",
+                  'Analyzing emotions...',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     color: Theme.of(context).colorScheme.primary,
                   ),
@@ -315,6 +316,7 @@ class _EmotionDetectorState extends State<EmotionDetector> {
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.surface,
+                borderRadius: BorderRadius.circular(24),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.05),
@@ -335,7 +337,7 @@ class _EmotionDetectorState extends State<EmotionDetector> {
                       ),
                       const SizedBox(width: 8),
                       Text(
-                        "Detected Emotions",
+                        'Detected Emotions',
                         style: Theme.of(
                           context,
                         ).textTheme.titleMedium?.copyWith(
@@ -384,11 +386,11 @@ class _EmotionDetectorState extends State<EmotionDetector> {
                                   vertical: 4,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: color,
+                                  color: color.withOpacity(0.1),
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 child: Text(
-                                  '${(emotion.score * 100).toStringAsFixed(1)}',
+                                  '${(emotion.score * 100).toStringAsFixed(1)}%',
                                   style: Theme.of(
                                     context,
                                   ).textTheme.titleMedium?.copyWith(
@@ -412,13 +414,13 @@ class _EmotionDetectorState extends State<EmotionDetector> {
                         ],
                       ),
                     );
-                  }),
+                  }).toList(),
                 ],
               ),
             ),
           ],
         ],
-      ],
+      ),
     );
   }
 }
