@@ -25,22 +25,13 @@ class _LiteralFigurativeScreenState extends State<LiteralFigurativeScreen> {
       _isAnalyzing = true;
       _analysis = null;
     });
-    try {
-      final result = await _emotionService.analyzeLiteralFigurative(
-        _textController.text,
-      );
-      setState(() {
-        _analysis = result;
-      });
-    } catch (e) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Error analyzing text: $e')));
-    } finally {
-      setState(() {
-        _isAnalyzing = false;
-      });
-    }
+    final result = await _emotionService.analyzeLiteralFigurative(
+      _textController.text,
+    );
+    setState(() {
+      _analysis = result;
+      _isAnalyzing = false;
+    });
   }
 
   @override
@@ -58,9 +49,9 @@ class _LiteralFigurativeScreenState extends State<LiteralFigurativeScreen> {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Theme.of(context).colorScheme.primary.withOpacity(0.05),
-              Theme.of(context).colorScheme.secondary.withOpacity(0.05),
-              Theme.of(context).colorScheme.tertiary.withOpacity(0.05),
+              Theme.of(context).colorScheme.primary.withValues(alpha: 0.05),
+              Theme.of(context).colorScheme.secondary.withValues(alpha: 0.05),
+              Theme.of(context).colorScheme.tertiary.withValues(alpha: 0.05),
             ],
           ),
         ),
@@ -102,7 +93,7 @@ class _LiteralFigurativeScreenState extends State<LiteralFigurativeScreen> {
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
+                        color: Colors.black.withValues(alpha: 0.05),
                         blurRadius: 20,
                         offset: const Offset(0, -5),
                       ),
@@ -118,7 +109,7 @@ class _LiteralFigurativeScreenState extends State<LiteralFigurativeScreen> {
                           decoration: BoxDecoration(
                             color: Theme.of(
                               context,
-                            ).colorScheme.primary.withOpacity(0.1),
+                            ).colorScheme.primary.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(16),
                           ),
                           child: Column(
@@ -202,7 +193,7 @@ class _LiteralFigurativeScreenState extends State<LiteralFigurativeScreen> {
                               border: Border.all(
                                 color: Theme.of(
                                   context,
-                                ).colorScheme.primary.withOpacity(0.1),
+                                ).colorScheme.primary.withValues(alpha: 0.1),
                               ),
                             ),
                             child: Column(
@@ -260,7 +251,7 @@ class _LiteralFigurativeScreenState extends State<LiteralFigurativeScreen> {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.3),
+        color: color.withValues(alpha: 0.3),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
@@ -283,7 +274,7 @@ class _LiteralFigurativeScreenState extends State<LiteralFigurativeScreen> {
             child: Text(
               description,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.8),
+                color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.8),
               ),
             ),
           ),
@@ -329,7 +320,7 @@ class _LiteralFigurativeScreenState extends State<LiteralFigurativeScreen> {
           Text(
             content,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.8),
+              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.8),
             ),
           ),
       ],

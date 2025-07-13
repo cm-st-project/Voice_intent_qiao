@@ -26,6 +26,7 @@ class _SpeechInputState extends State<SpeechInput> {
 
   Future<void> _initSpeech() async {
     final micStatus = await Permission.microphone.request();
+    print('micStatus: $micStatus');
     if (micStatus.isGranted) {
       _speechEnabled = await _speech.initialize(
         onError: (error) => _handleError(error.errorMsg),

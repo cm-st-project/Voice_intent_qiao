@@ -17,7 +17,7 @@ class LiteralResult {
       meaning: json['meaning'] as String,
       why: json['why'] as String,
       suggestedUnderstandingOrReply:
-          json['suggestedUnderstandingOrReply'] as String,
+          json['suggested_understanding_or_reply'] as String,
     );
   }
 
