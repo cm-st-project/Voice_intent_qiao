@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import '../l10n/app_localizations.dart';
 import 'package:flutter/rendering.dart';
 import 'package:project_mickey/constants/constant.dart';
 import '../services/emotion_service.dart';
 import '../widgets/emotion_detector.dart';
 import '../models/scenario.dart';
-import '../constants/scenarios.dart' as scenarios_data;
+import '../constants/scenarios_localized.dart';
 
 class ScenariosScreen extends StatefulWidget {
   const ScenariosScreen({super.key});
@@ -21,18 +22,24 @@ class _ScenariosScreenState extends State<ScenariosScreen> {
   late List<ScenarioCategory> _categories;
   late ScenarioCategory _currentCategory;
   int _currentScenarioIndex = 0;
+  bool _initialized = false;
 
   @override
   void initState() {
     super.initState();
-    _initializeScenarios();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_initialized) {
+      _initializeScenarios();
+      _initialized = true;
+    }
   }
 
   void _initializeScenarios() {
-    _categories =
-        scenarios_data.scenarios.entries
-            .map((entry) => ScenarioCategory.fromJson(entry.key, entry.value))
-            .toList();
+    _categories = ScenariosLocalized.getScenarios(Localizations.localeOf(context));
     _currentCategory = _categories.first;
   }
 
@@ -103,7 +110,7 @@ class _ScenariosScreenState extends State<ScenariosScreen> {
                     ),
                     const SizedBox(width: 16),
                     Text(
-                      "Pragmatic Scenarios",
+                      AppLocalizations.of(context)!.pragmaticScenariosTitle,
                       style: Theme.of(
                         context,
                       ).textTheme.headlineSmall?.copyWith(
@@ -181,19 +188,19 @@ class _ScenariosScreenState extends State<ScenariosScreen> {
                                     const SizedBox(height: 16),
                                     _buildScenarioSection(
                                       context,
-                                      "Situation",
+                                      AppLocalizations.of(context)!.situation,
                                       currentScenario.description,
                                       Icons.info_outline,
                                     ),
                                     _buildScenarioSection(
                                       context,
-                                      "Expected Action",
+                                      AppLocalizations.of(context)!.expectedAction,
                                       currentScenario.action,
                                       Icons.psychology,
                                     ),
                                     _buildScenarioSection(
                                       context,
-                                      "Why",
+                                      AppLocalizations.of(context)!.why,
                                       currentScenario.why,
                                       Icons.lightbulb_outline,
                                     ),
@@ -236,7 +243,7 @@ class _ScenariosScreenState extends State<ScenariosScreen> {
                               child: Column(
                                 children: [
                                   Text(
-                                    'Scenario ${_currentScenarioIndex + 1} of ${_currentCategory.scenarios.length}',
+                                    AppLocalizations.of(context)!.scenarioCounter(_currentScenarioIndex + 1, _currentCategory.scenarios.length),
                                     style: Theme.of(
                                       context,
                                     ).textTheme.titleSmall?.copyWith(

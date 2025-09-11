@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../l10n/app_localizations.dart';
 import '../constants/constant.dart';
 import '../services/emotion_service.dart';
 import '../models/literal_result.dart';
@@ -79,7 +80,7 @@ class _LiteralFigurativeScreenState extends State<LiteralFigurativeScreen> {
                     ),
                     const SizedBox(width: 16),
                     Text(
-                      'Literal vs. Figurative',
+                      AppLocalizations.of(context)!.literalVsFigurativeTitle,
                       style: Theme.of(
                         context,
                       ).textTheme.headlineSmall?.copyWith(
@@ -133,7 +134,7 @@ class _LiteralFigurativeScreenState extends State<LiteralFigurativeScreen> {
                                   ),
                                   const SizedBox(width: 8),
                                   Text(
-                                    'Understanding\nLanguage Types',
+                                    AppLocalizations.of(context)!.understandingLanguageTypes,
                                     style: Theme.of(
                                       context,
                                     ).textTheme.titleMedium?.copyWith(
@@ -147,23 +148,23 @@ class _LiteralFigurativeScreenState extends State<LiteralFigurativeScreen> {
                               const SizedBox(height: 8),
                               _buildLanguageTypeCard(
                                 context,
-                                'Literal',
-                                'Direct meaning of words (e.g., "It\'s raining" means actual rain)',
+                                AppLocalizations.of(context)!.literal,
+                                AppLocalizations.of(context)!.literalDescription,
                                 Colors.blue.shade100,
                               ),
                               const SizedBox(height: 8),
                               _buildLanguageTypeCard(
                                 context,
-                                'Figurative',
-                                'Symbolic or metaphorical meaning (e.g., It\'s raining cats and dogs)',
+                                AppLocalizations.of(context)!.figurative,
+                                AppLocalizations.of(context)!.figurativeDescription,
                                 Colors.purple.shade100,
                               ),
                               const SizedBox(height: 8),
 
                               _buildLanguageTypeCard(
                                 context,
-                                'Sarcastic',
-                                'Saying the opposite of what you mean (e.g., "Great weather!" during a storm)',
+                                AppLocalizations.of(context)!.sarcastic,
+                                AppLocalizations.of(context)!.sarcasticDescription,
                                 Colors.orange.shade100,
                               ),
                             ],
@@ -190,7 +191,7 @@ class _LiteralFigurativeScreenState extends State<LiteralFigurativeScreen> {
                                     width: 24,
                                     child: CircularProgressIndicator(),
                                   )
-                                  : const Text('Analyze'),
+                                  : Text(AppLocalizations.of(context)!.analyze),
                         ),
                         if (_analysis != null) ...[
                           const SizedBox(height: 24),
@@ -210,7 +211,7 @@ class _LiteralFigurativeScreenState extends State<LiteralFigurativeScreen> {
                               children: [
                                 _buildAnalysisSection(
                                   context,
-                                  'Type of Language',
+                                  AppLocalizations.of(context)!.typeOfLanguage,
                                   _analysis!.classification,
                                   Icons.category,
                                   chipColor: _getLanguageTypeColor(
@@ -219,19 +220,19 @@ class _LiteralFigurativeScreenState extends State<LiteralFigurativeScreen> {
                                 ),
                                 _buildAnalysisSection(
                                   context,
-                                  'What it Really Means',
+                                  AppLocalizations.of(context)!.whatItReallyMeans,
                                   _analysis!.meaning,
                                   Icons.lightbulb_outline,
                                 ),
                                 _buildAnalysisSection(
                                   context,
-                                  'Why this Type?',
+                                  AppLocalizations.of(context)!.whyThisType,
                                   _analysis!.why,
                                   Icons.help_outline,
                                 ),
                                 _buildAnalysisSection(
                                   context,
-                                  'How to Understand/\nRespond',
+                                  AppLocalizations.of(context)!.howToUnderstandRespond,
                                   _analysis!.suggestedUnderstandingOrReply,
                                   Icons.chat_bubble_outline,
                                 ),
