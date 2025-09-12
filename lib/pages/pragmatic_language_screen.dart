@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../l10n/app_localizations.dart';
 import '../constants/constant.dart';
 import '../services/emotion_service.dart';
 import '../models/pragmatic_result.dart';
@@ -80,7 +81,7 @@ class _PragmaticLanguageScreenState extends State<PragmaticLanguageScreen> {
                     ),
                     const SizedBox(width: 16),
                     Text(
-                      "Pragmatic Language",
+                      AppLocalizations.of(context)!.pragmaticLanguageTitle,
                       style: Theme.of(
                         context,
                       ).textTheme.headlineSmall?.copyWith(
@@ -134,7 +135,9 @@ class _PragmaticLanguageScreenState extends State<PragmaticLanguageScreen> {
                                   ),
                                   const SizedBox(width: 8),
                                   Text(
-                                    ' Understanding \n Pragmatic Language',
+                                    AppLocalizations.of(
+                                      context,
+                                    )!.understandingPragmaticLanguage,
                                     style: Theme.of(
                                       context,
                                     ).textTheme.titleMedium?.copyWith(
@@ -147,8 +150,9 @@ class _PragmaticLanguageScreenState extends State<PragmaticLanguageScreen> {
                               ),
                               const SizedBox(width: 8),
                               Text(
-                                "Pragmatic language refers to how we use language in social situations."
-                                "It includes understanding context, intent and social norms.",
+                                AppLocalizations.of(
+                                  context,
+                                )!.pragmaticLanguageDescription,
                                 style: Theme.of(
                                   context,
                                 ).textTheme.bodyMedium?.copyWith(
@@ -183,7 +187,7 @@ class _PragmaticLanguageScreenState extends State<PragmaticLanguageScreen> {
                                     height: 24,
                                     child: CircularProgressIndicator(),
                                   )
-                                  : const Text("Analyze"),
+                                  : Text(AppLocalizations.of(context)!.analyze),
                         ),
                         if (_analysis != null) ...[
                           const SizedBox(height: 24),
@@ -203,25 +207,27 @@ class _PragmaticLanguageScreenState extends State<PragmaticLanguageScreen> {
                               children: [
                                 _buildAnalysisSection(
                                   context,
-                                  'Languge Use',
+                                  AppLocalizations.of(context)!.languageUse,
                                   _analysis!.pragmaticUse,
                                   Icons.language,
                                 ),
                                 _buildAnalysisSection(
                                   context,
-                                  'Speaker\'s Intent',
+                                  AppLocalizations.of(context)!.speakerIntent,
                                   _analysis!.speakerIntent,
                                   Icons.language,
                                 ),
                                 _buildAnalysisSection(
                                   context,
-                                  'What it Means',
+                                  AppLocalizations.of(context)!.whatItMeans,
                                   _analysis!.interpretation,
                                   Icons.language,
                                 ),
                                 _buildAnalysisSection(
                                   context,
-                                  'Suggested Response',
+                                  AppLocalizations.of(
+                                    context,
+                                  )!.suggestedResponse,
                                   _analysis!.suggestedResponse,
                                   Icons.language,
                                 ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../l10n/app_localizations.dart';
 import '../constants/constant.dart';
 import '../services/emotion_service.dart';
 import '../widgets/emotion_detector.dart';
@@ -44,7 +45,7 @@ class _EmotionsSpeechScreenState extends State<EmotionsSpeechScreen> {
                     ),
                     const SizedBox(width: 16),
                     Text(
-                      "Emotion in Speech",
+                      AppLocalizations.of(context)!.emotionInSpeech,
                       style: Theme.of(
                         context,
                       ).textTheme.headlineSmall?.copyWith(
@@ -99,12 +100,12 @@ class _EmotionsSpeechScreenState extends State<EmotionsSpeechScreen> {
 
                             const SizedBox(height: 16),
                             Text(
-                              "Recording Your Voice",
+                              AppLocalizations.of(context)!.recordingYourVoice,
                               style: Theme.of(context).textTheme.titleLarge
                                   ?.copyWith(fontWeight: FontWeight.bold),
                             ),
                             Text(
-                              'Speak naturally and we\'ll analyze the emotions in your voice',
+                              AppLocalizations.of(context)!.speakNaturally,
                               style: Theme.of(
                                 context,
                               ).textTheme.bodyMedium?.copyWith(

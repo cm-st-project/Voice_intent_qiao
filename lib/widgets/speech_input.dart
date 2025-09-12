@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:permission_handler/permission_handler.dart';
+import '../l10n/app_localizations.dart';
 
 class SpeechInput extends StatefulWidget {
   final TextEditingController textController;
@@ -108,8 +109,8 @@ class _SpeechInputState extends State<SpeechInput> {
             decoration: InputDecoration(
               hintText:
                   _speechEnabled
-                      ? "Type or tap the microphone button to speak..."
-                      : 'Speech recognition is not available',
+                      ? AppLocalizations.of(context)!.speechInputHint
+                      : AppLocalizations.of(context)!.speechNotAvailable,
               border: const OutlineInputBorder(),
             ),
           ),

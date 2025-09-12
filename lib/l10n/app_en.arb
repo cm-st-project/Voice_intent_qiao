@@ -1,0 +1,230 @@
+{
+  "appTitle": "Voice Intent",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+  "appSubtitle": "Social Communication Assistant",
+  "@appSubtitle": {
+    "description": "The subtitle of the application"
+  },
+  "splashDescription": "Understanding emotions and social interactions",
+  "@splashDescription": {
+    "description": "Description text on splash screen"
+  },
+  "pragmaticLanguage": "Pragmatic\nLanguage",
+  "@pragmaticLanguage": {
+    "description": "Pragmatic Language feature title"
+  },
+  "pragmaticLanguageDesc": "Understand social language\nuse",
+  "@pragmaticLanguageDesc": {
+    "description": "Pragmatic Language feature description"
+  },
+  "emotionsInSpeech": "Emotions in\nSpeech",
+  "@emotionsInSpeech": {
+    "description": "Emotions in Speech feature title"
+  },
+  "emotionsInSpeechDesc": "Analyze emotions\nin speech",
+  "@emotionsInSpeechDesc": {
+    "description": "Emotions in Speech feature description"
+  },
+  "literalVsFigurative": "Literal v.s.\nFigurative",
+  "@literalVsFigurative": {
+    "description": "Literal vs Figurative feature title"
+  },
+  "literalVsFigurativeDesc": "Understand language meaning",
+  "@literalVsFigurativeDesc": {
+    "description": "Literal vs Figurative feature description"
+  },
+  "pragmaticScenarios": "Pragmatic\nScenarios",
+  "@pragmaticScenarios": {
+    "description": "Pragmatic Scenarios feature title"
+  },
+  "pragmaticScenariosDesc": "Meaning Behind Words",
+  "@pragmaticScenariosDesc": {
+    "description": "Pragmatic Scenarios feature description"
+  },
+  "speechInputHint": "Type or tap the microphone button to speak...",
+  "@speechInputHint": {
+    "description": "Hint text for speech input field"
+  },
+  "speechNotAvailable": "Speech recognition is not available",
+  "@speechNotAvailable": {
+    "description": "Message when speech recognition is not available"
+  },
+  "chooseActivity": "Choose an Activity",
+  "@chooseActivity": {
+    "description": "Title for activity selection section"
+  },
+  "listening": "Listening...",
+  "@listening": {
+    "description": "Text shown when listening for speech"
+  },
+  "languageSwitch": "Language",
+  "@languageSwitch": {
+    "description": "Language switch button text"
+  },
+  "english": "English",
+  "@english": {
+    "description": "English language option"
+  },
+  "chinese": "中文",
+  "@chinese": {
+    "description": "Chinese language option"
+  },
+  "emotionInSpeech": "Emotion in Speech",
+  "@emotionInSpeech": {
+    "description": "Title for emotion analysis screen"
+  },
+  "recordingYourVoice": "Recording Your Voice",
+  "@recordingYourVoice": {
+    "description": "Subtitle for voice recording section"
+  },
+  "speakNaturally": "Speak naturally and we'll analyze the emotions in your voice",
+  "@speakNaturally": {
+    "description": "Instructions for voice recording"
+  },
+  "literalVsFigurativeTitle": "Literal vs. Figurative",
+  "@literalVsFigurativeTitle": {
+    "description": "Title for literal vs figurative screen"
+  },
+  "understandingLanguageTypes": "Understanding\nLanguage Types",
+  "@understandingLanguageTypes": {
+    "description": "Subtitle for language types section"
+  },
+  "literal": "Literal",
+  "@literal": {
+    "description": "Literal language type"
+  },
+  "literalDescription": "Direct meaning of words (e.g., \"It's raining\" means actual rain)",
+  "@literalDescription": {
+    "description": "Description of literal language"
+  },
+  "figurative": "Figurative",
+  "@figurative": {
+    "description": "Figurative language type"
+  },
+  "figurativeDescription": "Symbolic or metaphorical meaning (e.g., It's raining cats and dogs)",
+  "@figurativeDescription": {
+    "description": "Description of figurative language"
+  },
+  "sarcastic": "Sarcastic",
+  "@sarcastic": {
+    "description": "Sarcastic language type"
+  },
+  "sarcasticDescription": "Saying the opposite of what you mean (e.g., \"Great weather!\" during a storm)",
+  "@sarcasticDescription": {
+    "description": "Description of sarcastic language"
+  },
+  "analyze": "Analyze",
+  "@analyze": {
+    "description": "Button text for analysis"
+  },
+  "typeOfLanguage": "Type of Language",
+  "@typeOfLanguage": {
+    "description": "Analysis section title"
+  },
+  "whatItReallyMeans": "What it Really Means",
+  "@whatItReallyMeans": {
+    "description": "Analysis section title"
+  },
+  "whyThisType": "Why this Type?",
+  "@whyThisType": {
+    "description": "Analysis section title"
+  },
+  "howToUnderstandRespond": "How to Understand/\nRespond",
+  "@howToUnderstandRespond": {
+    "description": "Analysis section title"
+  },
+  "pragmaticLanguageTitle": "Pragmatic Language",
+  "@pragmaticLanguageTitle": {
+    "description": "Title for pragmatic language screen"
+  },
+  "understandingPragmaticLanguage": " Understanding \n Pragmatic Language",
+  "@understandingPragmaticLanguage": {
+    "description": "Subtitle for pragmatic language section"
+  },
+  "pragmaticLanguageDescription": "Pragmatic language refers to how we use language in social situations.It includes understanding context, intent and social norms.",
+  "@pragmaticLanguageDescription": {
+    "description": "Description of pragmatic language"
+  },
+  "languageUse": "Language Use",
+  "@languageUse": {
+    "description": "Analysis section title"
+  },
+  "speakerIntent": "Speaker's Intent",
+  "@speakerIntent": {
+    "description": "Analysis section title"
+  },
+  "whatItMeans": "What it Means",
+  "@whatItMeans": {
+    "description": "Analysis section title"
+  },
+  "suggestedResponse": "Suggested Response",
+  "@suggestedResponse": {
+    "description": "Analysis section title"
+  },
+  "pragmaticScenariosTitle": "Pragmatic Scenarios",
+  "@pragmaticScenariosTitle": {
+    "description": "Title for pragmatic scenarios screen"
+  },
+  "situation": "Situation",
+  "@situation": {
+    "description": "Scenario section title"
+  },
+  "expectedAction": "Expected Action",
+  "@expectedAction": {
+    "description": "Scenario section title"
+  },
+  "why": "Why",
+  "@why": {
+    "description": "Scenario section title"
+  },
+  "scenarioCounter": "Scenario {current} of {total}",
+  "@scenarioCounter": {
+    "description": "Scenario counter text",
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "appName": "VoiceIntent",
+  "@appName": {
+    "description": "Application name"
+  },
+  "socialRules": "Social Rules",
+  "@socialRules": {
+    "description": "Social Rules category name"
+  },
+  "intentions": "Intentions",
+  "@intentions": {
+    "description": "Intentions category name"
+  },
+  "contextualAwareness": "Contextual Awareness",
+  "@contextualAwareness": {
+    "description": "Contextual Awareness category name"
+  },
+  "interpretation": "Interpretation",
+  "@interpretation": {
+    "description": "Interpretation category name"
+  },
+  "turnTakingInConversation": "Turn-taking in conversation",
+  "@turnTakingInConversation": {
+    "description": "Turn-taking subcategory"
+  },
+  "turnTakingDescription": "You're having a conversation with a classmate who is telling a story. You want to add a comment.",
+  "@turnTakingDescription": {
+    "description": "Turn-taking scenario description"
+  },
+  "turnTakingAction": "Wait until they pause or finish, then say your comment.",
+  "@turnTakingAction": {
+    "description": "Turn-taking expected action"
+  },
+  "turnTakingWhy": "Taking turns shows respect and makes conversations enjoyable for both people.",
+  "@turnTakingWhy": {
+    "description": "Turn-taking explanation"
+  }
+}

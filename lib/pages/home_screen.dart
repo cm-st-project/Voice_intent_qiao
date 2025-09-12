@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import '../l10n/app_localizations.dart';
 import 'pragmatic_language_screen.dart';
 import 'emotions_speech_screen.dart';
 import 'literal_figurative_screen.dart';
 import 'scenarios_screen.dart';
+import '../widgets/language_switch_button.dart';
 
 // This widget represents the main home screen UI.
 class HomeScreen extends StatelessWidget {
@@ -47,32 +49,36 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 16),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // App name styled using theme.
-                        Text(
-                          "Voice Intent",
-                          style: Theme.of(
-                            context,
-                          ).textTheme.titleLarge?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                        ),
-                        // Subtitle with reduced opacity.
-                        Text(
-                          "Social Communication Assistant",
-                          style: Theme.of(
-                            context,
-                          ).textTheme.bodyMedium?.copyWith(
-                            color: Theme.of(
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // App name styled using theme.
+                          Text(
+                            AppLocalizations.of(context)!.appTitle,
+                            style: Theme.of(
                               context,
-                            ).colorScheme.onBackground.withOpacity(0.7),
+                            ).textTheme.titleLarge?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
                           ),
-                        ),
-                      ],
+                          // Subtitle with reduced opacity.
+                          Text(
+                            AppLocalizations.of(context)!.appSubtitle,
+                            style: Theme.of(
+                              context,
+                            ).textTheme.bodyMedium?.copyWith(
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.onBackground.withOpacity(0.7),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
+                    // Language switch button
+                    const LanguageSwitchButton(),
                   ],
                 ),
               ),
@@ -104,7 +110,7 @@ class HomeScreen extends StatelessWidget {
                           vertical: 16,
                         ),
                         child: Text(
-                          "Choose an Activity",
+                          AppLocalizations.of(context)!.chooseActivity,
                           style: Theme.of(context).textTheme.titleMedium
                               ?.copyWith(fontWeight: FontWeight.bold),
                         ),
@@ -118,9 +124,9 @@ class HomeScreen extends StatelessWidget {
                                 Expanded(
                                   child: _buildFeatureCard(
                                     context,
-                                    title: "Pragmatic \nLanguage",
+                                    title: AppLocalizations.of(context)!.pragmaticLanguage,
                                     description:
-                                        "Understand social language \nuse",
+                                        AppLocalizations.of(context)!.pragmaticLanguageDesc,
                                     icon: Icons.chat_bubble_outline,
                                     color:
                                         Theme.of(context).colorScheme.primary,
@@ -139,9 +145,9 @@ class HomeScreen extends StatelessWidget {
                                 Expanded(
                                   child: _buildFeatureCard(
                                     context,
-                                    title: "Emotions in \nSpeech",
+                                    title: AppLocalizations.of(context)!.emotionsInSpeech,
                                     description:
-                                        "Analyze emotions \n in speech",
+                                        AppLocalizations.of(context)!.emotionsInSpeechDesc,
                                     icon: Icons.sentiment_satisfied_alt,
                                     color:
                                         Theme.of(context).colorScheme.secondary,
@@ -171,8 +177,8 @@ class HomeScreen extends StatelessWidget {
                                 Expanded(
                                   child: _buildFeatureCard(
                                     context,
-                                    title: "Literal v.s. \nFigurative",
-                                    description: "Understand language meaning",
+                                    title: AppLocalizations.of(context)!.literalVsFigurative,
+                                    description: AppLocalizations.of(context)!.literalVsFigurativeDesc,
                                     icon: Icons.translate,
                                     color:
                                         Theme.of(context).colorScheme.tertiary,
@@ -191,8 +197,8 @@ class HomeScreen extends StatelessWidget {
                                 Expanded(
                                   child: _buildFeatureCard(
                                     context,
-                                    title: "Pragmatic \nScenarios",
-                                    description: "Meaning Behind Words",
+                                    title: AppLocalizations.of(context)!.pragmaticScenarios,
+                                    description: AppLocalizations.of(context)!.pragmaticScenariosDesc,
                                     icon: Icons.people,
                                     color: Theme.of(
                                       context,

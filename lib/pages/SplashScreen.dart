@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../l10n/app_localizations.dart';
 import 'home_screen.dart';
 
 class Splashscreen extends StatefulWidget {
@@ -117,7 +118,7 @@ class _SplashscreenState extends State<Splashscreen>
                       ),
                       const SizedBox(height: 32),
                       Text(
-                        "Voice Intent",
+                        AppLocalizations.of(context)!.appTitle,
                         textAlign: TextAlign.center,
                         style: Theme.of(
                           context,
@@ -128,7 +129,7 @@ class _SplashscreenState extends State<Splashscreen>
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        "Understanding emotions and social interactions",
+                        AppLocalizations.of(context)!.splashDescription,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           color: Colors.white.withOpacity(0.7),
                           letterSpacing: 0.25,
